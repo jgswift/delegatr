@@ -1,6 +1,6 @@
 delegatr
 ====
-PHP 5.4+ delegate system 
+PHP 5.5+ delegate system 
 
 [![Build Status](https://travis-ci.org/jgswift/delegatr.png?branch=master)](https://travis-ci.org/jgswift/delegatr)
 

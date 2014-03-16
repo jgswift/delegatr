@@ -1,6 +1,6 @@
 {
     "name": "jgswift/delegatr",
-    "description": "PHP 5.4+ delegate system",
+    "description": "PHP 5.5+ delegate system",
     "keywords": ["php", "delegate", "closure", "serialize","trait"],
     "license": "MIT",
     "type": "library",
@@ -13,7 +13,7 @@
         }
     ],    
     "require": {
-        "php": ">=5.4",
+        "php": ">=5.5",
         "jeremeamia/FunctionParser": "dev-master",
         "jgswift/qtil": "dev-master"
     },
