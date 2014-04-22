@@ -3,6 +3,7 @@ delegatr
 PHP 5.5+ delegate system 
 
 [![Build Status](https://travis-ci.org/jgswift/delegatr.png?branch=master)](https://travis-ci.org/jgswift/delegatr)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jgswift/delegatr/badges/quality-score.png?s=5d6b9d9164025974598868d09842319256fc31be)](https://scrutinizer-ci.com/g/jgswift/delegatr/)
 
 ## Installation
 
