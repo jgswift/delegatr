@@ -4,7 +4,7 @@ namespace delegatr {
         /**
          * Default constructor, any custom constructors must also implement this using Delegate interface
          * @param callable $callback
-         * @param array $context
+         * @param array|null $context
          */
         public function __construct(callable $callback, $context = null) {
             Registry::add($this, $callback, $context);

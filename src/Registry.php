@@ -41,7 +41,7 @@ namespace delegatr {
 
         /**
          * Creates function parser for provided delegate
-         * @param object $object
+         * @param mixed $object
          * @return FunctionParser\FunctionParser
          */
         static function parse($object) {
@@ -79,12 +79,12 @@ namespace delegatr {
 
         /**
          * Local handling of delegate creation
-         * @param object $object
+         * @param mixed $object
          * @param callable $closure
-         * @param array $context
+         * @param array|null $context
          */
         static function add($object, callable $closure, $context = []) {
-            $id = qtil\Identifier::identify( $object );
+            $id = qtil\Identifier::identify($object);
 
             if(is_null($context)) {
                 $context = [];
@@ -99,7 +99,7 @@ namespace delegatr {
 
         /**
          * Removal of delegate from object and all corresponding metadata
-         * @param object $object
+         * @param mixed $object
          * @throws \InvalidArgumentException
          */
         static function remove($object) {
@@ -128,7 +128,7 @@ namespace delegatr {
 
         /**
          * Retrieves closure for delegate
-         * @param object $object
+         * @param mixed $object
          * @return mixed
          */
         static function closure($object) {
@@ -141,25 +141,27 @@ namespace delegatr {
 
         /**
          * Performs rebinding of delegate closure
-         * @param object $object
-         * @param object $subject
-         * @return mixed
+         * @param mixed $object
+         * @param mixed $subject
+         * @return \Closure
          */
         static function bindTo($object, $subject) {
             if(self::delegates($object)) {
                 $id = qtil\Identifier::identify($object);
-                self::$delegates[$id] = self::$delegates[$id]->bindTo($subject,$subject);
+                if(method_exists(self::$delegates[$id],'bindTo')) {
+                    self::$delegates[$id] = self::$delegates[$id]->bindTo($subject,$subject);
+                }
                 self::$reflection[$id] = new \ReflectionFunction(self::$delegates[$id]);
                 self::$parser[$id] = new FunctionParser\FunctionParser(self::$reflection[$id]);
                 return self::$delegates[$id];
             }
             
-            throw new Exception('Cannot bind empty delegate');
+            return $object;
         }
 
         /**
          * Retrieves local ReflectionFunction for delegate
-         * @param object $object
+         * @param mixed $object
          * @return \ReflectionFunction
          */
         static function reflect($object) {
@@ -172,7 +174,7 @@ namespace delegatr {
 
         /**
          * Retrieves delegate code string
-         * @param object $object
+         * @param mixed $object
          * @return string
          */
         static function code($object) {
@@ -182,7 +184,7 @@ namespace delegatr {
 
         /**
          * Retrieves delegate context
-         * @param object $object
+         * @param mixed $object
          * @return array
          */
         static function context($object) {
