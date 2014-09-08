@@ -1,5 +1,8 @@
 <?php
 namespace delegatr {
+    use Veval;
+    use qtil;
+    
     trait Serializable {
         use Delegate;
 
@@ -28,9 +31,22 @@ namespace delegatr {
 
             $builder = function() use($code, $context) {
                 extract($context);
-                eval('$_function = '.$code.';');
-
-                return $_function;
+                
+                if(strpos(ini_get('disable_functions'),'eval') === false) {
+                    $fn_code = '$_function = '.$code.';';
+                    eval($fn_code);
+                    return $_function;
+                } else {
+                    $id = qtil\Identifier::identify($code);
+                    $fn_code = 'function delegate_'.$id.'() {
+                            return '.$code.';
+                        }';
+                    Veval::execute('<?php '.$fn_code);
+                    return function()use($id) {
+                        $closure = call_user_func_array('delegate_'.$id, func_get_args());
+                        return $closure();
+                    };
+                }
             };
 
             $closure = $builder();

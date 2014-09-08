@@ -7,12 +7,23 @@ PHP 5.5+ delegate system
 
 ## Installation
 
-Install via [composer](https://getcomposer.org/):
+Install via cli using [composer](https://getcomposer.org/):
 ```sh
-php composer.phar require jgswift/delegatr:dev-master
+php composer.phar require jgswift/delegatr:0.1.*
+```
+
+Install via composer.json using [composer](https://getcomposer.org/):
+```json
+{
+    "require": {
+        "jgswift/delegatr": "0.1.*"
+    }
+}
 ```
 
 ## Usage
+
+### Serializable Closure
 
 Delegatr provides a substitute for closures, but with the additional ability to serialize delegates
 
@@ -34,6 +45,8 @@ $delegate2 = unserialize($serial_string)
 var_dump($delegate2()); // returns 'foo';
 ```
 
+### Simple delegate (without serialization)
+
 A simpler implementation is also available without \Serializable included
 
 ```php
@@ -49,4 +62,15 @@ $delegate = new MyDelegate(function() {
 var_dump($delegate()); // returns 'foo';
 ```
 
-Note: this package relies heavily on eval to function.  If you are not comfortable with using eval or do not understand the security risks, I do not suggest you use this package.
+### Eval Fallback & Vulnerability
+
+The [eval](http://php.net/manual/en/function.eval.php) function is heavily relied on in this package.  
+If you are not comfortable with eval or do not understand the security risks, I do not suggest you use this package.
+
+However, *eval* itself is *not* required to serialize delegates.  
+Delegatr uses [adlawson](http://github.com/adlawson/veval.php) to compile scripts at run-time even in environments where *eval* is disabled.
+Bypassing eval in this way doesn't reduce the risk of code injection.
+
+
+
+
