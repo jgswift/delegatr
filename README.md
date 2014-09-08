@@ -68,7 +68,7 @@ The [eval](http://php.net/manual/en/function.eval.php) function is heavily relie
 If you are not comfortable with eval or do not understand the security risks, I do not suggest you use this package.
 
 However, *eval* itself is *not* required to serialize delegates.  
-Delegatr uses [adlawson](http://github.com/adlawson/veval.php) to compile scripts at run-time even in environments where *eval* is disabled.
+Delegatr uses [adlawson/veval.php](http://github.com/adlawson/veval.php) to compile scripts at run-time even in environments where *eval* is disabled.
 Bypassing eval in this way doesn't reduce the risk of code injection.
 
 
