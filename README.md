@@ -21,6 +21,12 @@ Install via composer.json using [composer](https://getcomposer.org/):
 }
 ```
 
+## Dependency
+
+* php 5.5+
+* [jgswift/FunctionParser](http://github.com/jgswift/FunctionParser) - forked from [jeremeamia/FunctionParser](http://github.com/jeremeamia/FunctionParser)
+* [adlawson/veval.php](http://github.com/adlawson/veval.php) - eval fallback using virtual file system
+
 ## Usage
 
 ### Serializable Closure
