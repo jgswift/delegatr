@@ -14,8 +14,8 @@
     ],    
     "require": {
         "php": ">=5.5",
-        "jeremeamia/FunctionParser": "dev-master",
-        "jgswift/qtil": "dev-master",
+        "jeremeamia/FunctionParser": "*",
+        "jgswift/qtil": "0.1.*",
         "adlawson/veval": "1.*"
     },
     "require-dev": {
