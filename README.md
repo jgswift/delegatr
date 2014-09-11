@@ -4,6 +4,13 @@ PHP 5.5+ delegate system
 
 [![Build Status](https://travis-ci.org/jgswift/delegatr.png?branch=master)](https://travis-ci.org/jgswift/delegatr)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jgswift/delegatr/badges/quality-score.png?s=5d6b9d9164025974598868d09842319256fc31be)](https://scrutinizer-ci.com/g/jgswift/delegatr/)
+[![Latest Stable Version](https://poser.pugx.org/jgswift/delegatr/v/stable.svg)](https://packagist.org/packages/jgswift/delegatr)
+[![License](https://poser.pugx.org/jgswift/delegatr/license.svg)](https://packagist.org/packages/jgswift/delegatr)
+[![Coverage Status](https://coveralls.io/repos/jgswift/delegatr/badge.png?branch=master)](https://coveralls.io/r/jgswift/delegatr?branch=master)
+
+## Description
+
+delegatr provides a callable object substitute for closures.  Delegate closures defined with this package can be serialized and relies on ```eval``` to unserialize them.
 
 ## Installation
 
@@ -31,11 +38,8 @@ Install via composer.json using [composer](https://getcomposer.org/):
 
 ### Serializable Closure
 
-Delegatr provides a substitute for closures, but with the additional ability to serialize delegates
-
 The following is a serializable Delegate minimal example
 ```php
-<?php
 class MyDelegate {
     use delegatr\Serializable;
 }
@@ -56,7 +60,6 @@ var_dump($delegate2()); // returns 'foo';
 A simpler implementation is also available without \Serializable included
 
 ```php
-<?php
 class MyDelegate {
     use delegatr\Delegate;
 }
