@@ -14,7 +14,7 @@
     ],    
     "require": {
         "php": ">=5.5",
-        "jeremeamia/FunctionParser": "0.1.1",
+        "jeremeamia/FunctionParser": "*",
         "jgswift/qtil": "0.1.*",
         "adlawson/veval": "1.*"
     },
