@@ -14,14 +14,14 @@
     ],    
     "require": {
         "php": ">=5.5",
-        "jgswift/functionparser": "0.1.1",
+        "jeremeamia/FunctionParser": "0.1.1",
         "jgswift/qtil": "0.1.*",
         "adlawson/veval": "1.*"
     },
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/jgswift/functionparser"
+            "url": "https://github.com/jgswift/FunctionParser"
         }
     ],
     "require-dev": {
