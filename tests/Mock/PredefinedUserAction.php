@@ -6,7 +6,7 @@ namespace delegatr\Tests\Mock {
             delegatr\Serializable::__construct as construct;
         }
         
-        function __construct($context = null) {
+        function __construct(array $context = []) {
             $this->construct(function() {
                 return 'action executed!';
             }, $context);

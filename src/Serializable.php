@@ -30,8 +30,6 @@ namespace delegatr {
             list($code, $context) = (array)unserialize($data);
 
             $builder = function() use($code, $context) {
-                extract($context);
-                
                 if(strpos(ini_get('disable_functions'),'eval') === false) {
                     $fn_code = '$_function = '.$code.';';
                     eval($fn_code);

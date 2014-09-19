@@ -83,7 +83,7 @@ namespace delegatr {
          * @param callable $closure
          * @param array|null $context
          */
-        static function add($object, callable $closure, $context = []) {
+        static function add($object, callable $closure, array $context = []) {
             $id = qtil\Identifier::identify($object);
 
             if(is_null($context)) {
@@ -95,6 +95,10 @@ namespace delegatr {
             self::$reflection[$id] = new \ReflectionFunction($closure);
             self::$object[$id] = $object;
             self::$uids[] = $id;
+            
+            if(!empty($context)) {
+                self::rebind($object,$context);
+            }
         }
 
         /**
@@ -190,6 +194,71 @@ namespace delegatr {
         static function context($object) {
             $parser = self::parse($object);
             return $parser->getContext();
+        }
+        
+        /**
+         * Dynamically adds context to closure
+         * @param mixed $object
+         * @param array $context
+         */
+        static function rebind($object,array $context) {
+            $code = self::code($object);
+            $count = count($context)-1;
+            
+            $fn_code = '$_function = '.$code.';';
+            if(($pos = strpos($fn_code,'use(')) !== false) {
+                $c_string = '';
+                foreach($context as $k => $c) {
+                    $c_string.='$'.$k.',';
+                }
+                
+                $fn_code = substr($fn_code,0,$pos).$c_string.substr($fn_code,$pos);
+            } else {
+                $pos = strpos($fn_code,'{');
+                if($pos !== false) {
+                    $pos -= 1;
+                    $c_string = '';
+                    $i = 0;
+                    foreach($context as $k => $c) {
+                        $c_string.='$'.$k;
+                        if($i < $count) {
+                            $c_string.=',';
+                        }
+                        $i++;
+                    }
+                    
+                    $fn_code = substr($fn_code,0,$pos).'use('.$c_string.')'.substr($fn_code,$pos);
+                }
+            }
+            
+            if(strpos(ini_get('disable_functions'),'eval') === false) {
+                extract($context);
+                eval($fn_code);
+            } else {
+                $id = qtil\Identifier::identify($code);
+                
+                $a_string = '';
+                $i = 0;
+                
+                foreach($context as $k => $c) {
+                    $a_string.='$'.$k;
+                    if($i < $count) {
+                        $a_string.=',';
+                    }
+                    $i++;
+                }
+                
+                $fn_code = 
+                    'function delegate_'.$id.'('.$a_string.') {
+                        return '.$fn_code.';
+                    }';
+                
+                \Veval::execute('<?php '.$fn_code);
+                
+                $_function = call_user_func_array('delegate_'.$id, array_values($context));
+            }
+            
+            self::add($object, $_function);
         }
     }
 }

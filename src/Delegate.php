@@ -6,7 +6,7 @@ namespace delegatr {
          * @param callable $callback
          * @param array|null $context
          */
-        public function __construct(callable $callback, $context = null) {
+        public function __construct(callable $callback, array $context = []) {
             Registry::add($this, $callback, $context);
         }
 
@@ -43,11 +43,19 @@ namespace delegatr {
         }
 
         /**
-         * Retrieves context provided on instantiation
+         * Retrieves context "use" variables
          * @return array
          */
         public function getContext() {
             return Registry::context($this);
+        }
+        
+        /**
+         * Updates context "use" variables dynamically
+         * @param array $context
+         */
+        public function setContext(array $context) {
+            Registry::rebind($this, $context);
         }
 
         /**
@@ -56,7 +64,7 @@ namespace delegatr {
          * @return self
          */
         public function bindTo($object) {
-            return new self(Registry::bindTo($this, $object),$this->getContext());
+            return new self(Registry::bindTo($this, $object));
         }
     }
 }

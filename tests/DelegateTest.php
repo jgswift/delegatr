@@ -46,5 +46,16 @@ namespace delegatr\Tests {
             
             $this->assertEquals('object2',$result2);
         }
+        
+        function testLambdaExpression() {
+            $x = 10;
+            $y = 2;
+            
+            $lambda = new \delegatr\Lambda(function() {
+                return $x + $y;
+            }, get_defined_vars());
+            
+            $this->assertEquals(12,$lambda());
+        }
     }
 }
