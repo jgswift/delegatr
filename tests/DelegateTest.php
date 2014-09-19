@@ -57,5 +57,19 @@ namespace delegatr\Tests {
             
             $this->assertEquals(12,$lambda());
         }
+        
+        function testLambdaSerialize() {
+            $lambda = new \delegatr\Lambda(function() {
+                return 'foo';
+            });
+            
+            $this->assertEquals('foo',$lambda());
+            
+            $serial = serialize($lambda);
+            
+            $lambda2 = unserialize($serial);
+            
+            $this->assertEquals('foo',$lambda2());
+        }
     }
 }

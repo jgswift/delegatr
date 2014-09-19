@@ -86,10 +86,6 @@ namespace delegatr {
         static function add($object, callable $closure, array $context = []) {
             $id = qtil\Identifier::identify($object);
 
-            if(is_null($context)) {
-                $context = [];
-            }
-            
             self::$context[$id] = $context;
             self::$delegates[$id] = $closure;
             self::$reflection[$id] = new \ReflectionFunction($closure);
@@ -258,6 +254,7 @@ namespace delegatr {
                 $_function = call_user_func_array('delegate_'.$id, array_values($context));
             }
             
+            self::remove($object);
             self::add($object, $_function);
         }
     }

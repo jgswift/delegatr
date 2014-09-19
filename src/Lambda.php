@@ -1,6 +1,6 @@
 <?php
 namespace delegatr {
-    class Lambda {
+    class Lambda implements \Serializable {
         use Serializable;
     }
 }
